@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shibin Abraham</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #f5f5f7;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: background 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #f5f5f7;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: #f5f5f7;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 400;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #0071e3;
+        }
+
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect width="1200" height="800" fill="%23000"/><g opacity="0.05"><path d="M100,200 Q300,100 500,200 T900,200" stroke="%23a8d5a0" stroke-width="2" fill="none"/><circle cx="150" cy="300" r="3" fill="%23a8d5a0"><animate attributeName="cy" values="300;310;300" dur="4s" repeatCount="indefinite"/></circle><circle cx="400" cy="400" r="2" fill="%23588b4a"><animate attributeName="cx" values="400;410;400" dur="5s" repeatCount="indefinite"/></circle><circle cx="700" cy="250" r="2.5" fill="%23a8d5a0"><animate attributeName="cy" values="250;260;250" dur="6s" repeatCount="indefinite"/></circle></g></svg>');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 2rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            z-index: 2;
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-img {
+            width: 400px;
+            height: 500px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.6s ease, box-shadow 0.6s ease;
+            background: linear-gradient(145deg, #2d2d30, #1d1d1f);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 30px 80px rgba(0, 113, 227, 0.2);
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #f5f5f7 0%, #a1a1a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #a1a1a6;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: #86868b;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.9s forwards;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.2s forwards;
+        }
+
+        .cta-button {
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cta-primary {
+            background: #0071e3;
+            color: white;
+            border-color: #0071e3;
+        }
+
+        .cta-primary:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: #f5f5f7;
+        }
+
+        .cta-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            padding: 120px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #f5f5f7 0%, #a1a1a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .timeline-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-year {
+            min-width: 120px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0071e3;
+            padding-top: 0.5rem;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: rgba(29, 29, 31, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-left: 2rem;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .timeline-content:hover {
+            border-color: rgba(0, 113, 227, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #f5f5f7;
+        }
+
+        .timeline-institution {
+            color: #a1a1a6;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .timeline-subjects {
+            color: #86868b;
+            line-height: 1.7;
+        }
+
+        .timeline-subjects strong {
+            color: #f5f5f7;
+            display: block;
+            margin-bottom: 0.8rem;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .achievement-card {
+            background: rgba(29, 29, 31, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 113, 227, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .achievement-card:hover::before {
+            left: 100%;
+        }
+
+        .achievement-card:hover {
+            border-color: rgba(0, 113, 227, 0.3);
+            transform: translateY(-10px);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+        }
+
+        .rank-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0071e3, #007aff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #f5f5f7;
+        }
+
+        .achievement-institution {
+            color: #a1a1a6;
+            margin-bottom: 1.5rem;
+        }
+
+        .achievement-description {
+            color: #86868b;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .achievement-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 1rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: rgba(29, 29, 31, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .project-card:hover {
+            border-color: rgba(0, 113, 227, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #f5f5f7;
+        }
+
+        .project-description {
+            color: #86868b;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: rgba(0, 113, 227, 0.2);
+            color: #0071e3;
+            padding: 0.3rem 0.8rem;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .contact-section {
+            background: rgba(29, 29, 31, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .contact-card:hover {
+            border-color: rgba(0, 113, 227, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #0071e3;
+        }
+
+        .contact-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #f5f5f7;
+        }
+
+        .contact-info {
+            color: #86868b;
+            word-break: break-all;
+        }
+
+        .contact-info a {
+            color: #0071e3;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: #007aff;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+            
+            .hero-image {
+                order: -1;
+            }
+            
+            .profile-img {
+                width: 300px;
+                height: 375px;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+            }
+            
+            .timeline-content {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+            
+            .achievements-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                gap: 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .hero-cta {
+                justify-content: center;
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .scroll-indicator::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0071e3;
+            animation: scrollMove 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollMove {
+            0%, 100% { transform: translateY(-100%); }
+            50% { transform: translateY(100%); }
+        }
+	
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Shibin Abraham</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#achievements">Achievements</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Shibin Abraham</h1>
+                <p class="hero-subtitle">M.Sc. Artificial Intelligence Graduate</p>
+                <p class="hero-description">Passionate about leveraging cutting-edge AI technologies to solve complex problems. Experienced in machine learning, deep learning, and computer vision with a strong foundation in electronics and embedded systems.</p>
+                <div class="hero-cta">
+                    <a href="#contact" class="cta-button cta-primary">Get In Touch</a>
+                    <a href="#projects" class="cta-button cta-secondary">View Projects</a>
+                </div>
+            </div>
+            <div class="hero-image">
+    <img src="images/shibin_Profile_image.jpeg" alt="Shibin Abraham"class="profile-img">
+
+            </div>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <section id="education" class="section">
+        <h2 class="section-title">Education</h2>
+        <div class="timeline-container">
+            <div class="timeline-item">
+                <div class="timeline-year">2022 - 2024</div>
+                <div class="timeline-content">
+                    <h3 class="timeline-title">Master of Science in Artificial Intelligence</h3>
+                    <p class="timeline-institution">School of Technology and Applied Sciences, Kottayam, Kerala</p>
+                    <div class="timeline-subjects">
+                        <strong>Advanced Coursework:</strong>
+                        Machine Learning • Deep Learning • Parallel Programming • Digital Image Processing • Soft Computing • Advanced AI Techniques
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">2019 - 2022</div>
+                <div class="timeline-content">
+                    <h3 class="timeline-title">Bachelor of Science in Electronics</h3>
+                    <p class="timeline-institution">College of Applied Science IHRD, Mallapally, Kerala</p>
+                    <div class="timeline-subjects">
+                        <strong>Core Subjects:</strong>
+                        Basic Electronics • Semiconductors • Integrated Circuits • Digital Electronics • Microcontrollers • Embedded Systems
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="achievements" class="section">
+        <h2 class="section-title">Academic Excellence</h2>
+        <div class="achievements-grid">
+            <div class="achievement-card">
+                <div class="rank-number">2nd</div>
+                <h3 class="achievement-title">M.Sc. Artificial Intelligence</h3>
+                <p class="achievement-institution">Mahatma Gandhi University, Kerala</p>
+                <p class="achievement-description">Achieved 2nd provisional rank position university-wide for exceptional performance in advanced AI coursework including Machine Learning, Deep Learning, and Digital Image Processing.</p>
+<img src="images/msc_rank.jpeg" alt="M.Sc. AI Rank List" class="achievement-image">
+
+            </div>
+            
+            <div class="achievement-card">
+                <div class="rank-number">4th</div>
+                <h3 class="achievement-title">B.Sc. Electronics</h3>
+                <p class="achievement-institution">Mahatma Gandhi University, Kerala</p>
+                <p class="achievement-description">Secured 4th provisional rank position university-wide demonstrating excellence in Electronics, Digital Systems, and Microcontroller Programming.</p>
+                <!-- REPLACE FILENAME WITH YOUR B.SC. ELECTRONICS RANK LIST IMAGE -->
+                <img src="images/bsc-rank-list.jpeg" alt="B.Sc. Electronics Achievement" class="achievement-image">
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <h2 class="section-title">Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3 class="project-title">Image Captioning using CNN and GRU with Attention Mechanism</h3>
+                <p class="project-description">Developed an advanced image captioning system that combines Convolutional Neural Networks for feature extraction with Gated Recurrent Units and attention mechanisms for generating accurate and contextually relevant captions.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">CNN</span>
+                    <span class="tech-tag">GRU</span>
+                    <span class="tech-tag">Attention Mechanism</span>
+                    <span class="tech-tag">Computer Vision</span>
+                    <span class="tech-tag">NLP</span>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <h3 class="project-title">Video Classification using Transformer-based Models</h3>
+                <p class="project-description">Implemented state-of-the-art transformer architectures for video classification tasks, leveraging temporal attention mechanisms to understand and classify video sequences with high accuracy.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Transformers</span>
+                    <span class="tech-tag">Video Processing</span>
+                    <span class="tech-tag">Deep Learning</span>
+                    <span class="tech-tag">Temporal Analysis</span>
+                    <span class="tech-tag">Classification</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact-section">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="contact-icon">📧</div>
+                <h3 class="contact-title">Email</h3>
+                <p class="contact-info"><a href="mailto:shibinabraham71@gmail.com">shibinabraham71@gmail.com</a></p>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">📱</div>
+                <h3 class="contact-title">Phone</h3>
+                <p class="contact-info"><a href="tel:+918109914897">+91 8109914897</a></p>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">📍</div>
+                <h3 class="contact-title">Location</h3>
+                <p class="contact-info">House no 44, Pampady<br>Kottayam, Kerala</p>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">💼</div>
+                <h3 class="contact-title">LinkedIn</h3>
+                <p class="contact-info"><a href="http://www.linkedin.com/in/shibin-abraham-491677222" target="_blank">LinkedIn Profile</a></p>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">💻</div>
+                <h3 class="contact-title">GitHub</h3>
+                <p class="contact-info"><a href="https://github.com/AbrahamShibin" target="_blank">GitHub Profile</a></p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(0, 0, 0, 0.8)';
+            }
+        });
+
+        // Intersection Observer for timeline animations
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        });
+
+        // Observe timeline items
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            timelineObserver.observe(item);
+        });
+
+        // Profile image subtle parallax effect
+        const profileImg = document.querySelector('.profile-img');
+        let mouseX = 0;
+        let mouseY = 0;
+        let imgX = 0;
+        let imgY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+        });
+
+        function animateProfile() {
+            imgX += (mouseX * 3 - imgX) * 0.1;
+            imgY += (mouseY * 3 - imgY) * 0.1;
+            
+            if (profileImg) {
+                profileImg.style.transform = `translate(${imgX}px, ${imgY}px)`;
+            }
+            
+            requestAnimationFrame(animateProfile);
+        }
+
+        animateProfile();
+
+        // Add active nav link highlighting
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.color = '#f5f5f7';
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.style.color = '#0071e3';
+                }
+            });
+        });
+
+        // Smooth scroll to top on logo click
+        document.querySelector('.logo').addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
